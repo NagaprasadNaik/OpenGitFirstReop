@@ -1,0 +1,936 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    /* overflow-x: hidden; */
+    max-width: 100%;
+}
+
+body{
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+:root{
+    --light-gray: #f1ebeb;
+    --light-orange: rgb(231 117 117);
+    --light-blue : rgb(143, 143, 245);
+    --heebo: 'Heebo', sans-serif;
+    --bg-color-blue : rgb(47, 3, 104);
+    --bg-color-pink: rgb(128, 4, 117); 
+    --btn-lbl-color : #5478c9;
+}
+
+
+/*================================================
+1.0: Registration
+==================================================*/
+.box{
+    background-color: #ebeeef;
+
+}
+
+.registration .container {
+    margin: 25px auto;
+    border-radius: 10px;
+}
+
+.registration .container .form-heading {
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--btn-lbl-color);
+    font-weight: 600;
+}
+
+.registration .container .image .img{
+    width: 100%;
+    height: 100%;
+}
+
+
+.registration .container .data .form{
+    border: 1px solid #f6f8f9;
+    padding-top: 18px;
+    border-radius: 10px;
+    background: #f6f8f9;
+}
+
+
+.registration .container .data .form-floating{
+    margin-top: 10px;
+    /* margin-bottom: 15px; */
+}
+
+.registration .container .data .form-floating input{
+    width: 75%;
+    height: 50px;
+    margin: 0 auto;
+    color: black !important;
+    text-align: center;
+    /* background: #f6f8f9; */
+}
+
+.registration .container .data .form-floating label{
+    padding: 5px;
+    margin-left: 60px;
+    color: var(--btn-lbl-color);
+}
+
+.registration .container .data .form-floating .error{
+    color: red;
+    margin-left: 57px;
+}
+
+.registration .container .data .checkbox{
+    margin: 10px 58px;
+}
+
+.registration .container .data .submit{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+    margin-top: 13px;
+}
+
+.registration .container .data .submit input{
+    width: 50%;
+    background: var(--btn-lbl-color);
+    color: #f7f5f5;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: capitalize;
+    padding: 8px;
+}
+
+.registration .container .data p{
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400
+}
+
+.registration .container .data p a{
+    /* text-decoration: none; */
+    color: var(--btn-lbl-color);
+}
+
+/*================================================
+1.1: forgot password
+==================================================*/
+
+.forgot_pwd .form-box{
+    width: 400px;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    /* border: 1px solid black; */
+}
+
+.forgot_pwd .form-box h3{
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.forgot_pwd .form-box p{
+    text-align: center;
+    font-size: 17px;
+    margin-bottom: 28px;
+}
+
+.forgot_pwd .form-box .floating{
+    margin-bottom: 15px;
+}
+
+.forgot_pwd .form-box .floating i{
+    position: absolute;
+    text-align: left;
+    transform: translate(320px, 16px);
+}
+
+.forgot_pwd .form-box .floating .eye #eye{
+    display: none;
+}
+
+.forgot_pwd .form-box .floating .eye:hover{
+    cursor: pointer;
+} 
+
+.forgot_pwd .form-box .floating input{
+    width: 80%;
+    height: 50px;
+    margin: 0 10%;
+    border-radius: 5px;
+    padding: 0 20px;
+    border: 1px solid rgb(192, 191, 191);
+    outline: none;
+}
+
+.forgot_pwd .form-box .floating label{
+    position: absolute;
+    left: 0;
+    padding: 12px 60px;
+    text-transform: capitalize;
+    transition: 0.2s;
+}
+
+.forgot_pwd .form-box .floating input:focus
+{
+    border: 1px solid rgb(5, 151, 107);
+    outline: none;
+}
+
+.forgot_pwd .form-box .floating input:valid ~ label,
+.forgot_pwd .form-box .floating input:focus ~ label{
+    transform: translate(10px, -7px);
+    font-size: 15px;
+    padding: 0px;
+    margin-left: 38px;
+    background-color: white;
+    color: rgb(5, 151, 107);
+}
+
+.forgot_pwd .form-box .error{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.forgot_pwd .form-box .sbt-btn .submit{
+    width: 80%;
+    height: 50px;
+    border: 1px solid beige;
+    border-radius: 5px;
+    margin: 10px 10%;
+    background-color: rgb(5, 151, 107);
+    color: var(--light-gray);
+    text-transform: capitalize;
+}
+
+.forgot_pwd .form-box .sbt-btn .submit:hover{
+    background-color: rgb(3, 126, 89);
+}
+
+.forgot_pwd .form-box .back{
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-top: 10px;
+}
+
+.forgot_pwd .form-box .back a{
+    text-decoration: none;
+    color: rgb(5, 151, 107);
+}
+
+.forgot_pwd .form-box .icon{
+    text-align: center;
+    font-size: 50px;
+}
+
+
+/*================================================
+2.0: login
+==================================================*/
+.login-area{
+    background-color: #ebeeef;
+}   
+
+.login-area .login-row{
+    margin-top: 85px;
+    margin-bottom: 50px;
+}
+
+.login-area .login-img{
+    background-color: var(--btn-lbl-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 0px;
+}
+
+.login-area .img{
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.login-area .login-fields{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+.login-area .form-container{
+    width: 350px;
+    height: auto;
+    margin-top: 56px;
+    margin-left: 88px;
+}
+
+.login-area .heading h3{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 33px;
+    color: var(--btn-lbl-color);
+    padding: 10px 0px;
+    margin-bottom: 20px;
+}
+
+.login-area .error{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-area .form-floating i{
+    position: absolute;
+    text-align: left;
+    transform: translate(290px, 20px);
+}
+
+.login-area .form-floating .eye #eye{
+    display: none;
+}
+
+.login-area .form-floating .eye:hover{
+    cursor: pointer;
+} 
+
+.login-area .form-floating input{
+    width: 90%;
+    height: 64px;
+    margin: 0 auto;
+    color: black !important;
+    background: #f6f8f9;
+}
+
+.login-area .form-floating label{
+    margin-left: 20px;
+    color: var(--btn-lbl-color);
+    /* background: #f6f8f9; */
+}
+
+.login-area .forgot-pass{
+    text-align: right;
+    padding: 0 18px;
+}
+
+.login-area .sbt-btn input{
+    width: 90%;
+    height: 55px;
+    margin: 0 5%;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background: var(--btn-lbl-color);
+    color: #f7f5f5;
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.login-area .sbt-btn p{
+    text-align: center;
+    margin-top: 7px;
+}
+
+.login-area input[name="email"]{
+    margin-top: 12px;
+    margin-bottom: 31px;
+}
+
+.login-area input[name="password"]{
+    margin-bottom: 7    px;
+}
+
+.login-area #timeout{
+    color: red;
+}
+
+/*================================================
+3.0: home
+==================================================*/
+
+.nav-bar{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar{
+    background-image: linear-gradient(to right, var(--bg-color-blue), var(--bg-color-pink));
+}
+
+#main-logo{
+    width: 135px;
+    height: 80px;
+}
+
+.navbar-nav li{
+    padding: 0 10px;
+}
+
+.navbar-nav .nav-item .nav-link{
+    color: #fdfdfd !important;
+}
+
+.navbar-nav .nav-item .nav-link::after{
+    content: '';
+    background-color: rgb(231 117 117);
+    display: block;
+    margin: auto;
+    height: 3px;
+    width: 0%;
+    transition: 0.5s;
+}
+
+
+.navbar-nav .nav-item .nav-link:hover::after{
+    /* color: rgb(231 117 117) !important; */
+    width: 100%;
+}
+/* 239 136 100 251 201 108*/
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* remove the gap so it doesn't close */
+}
+
+/* ************** Banner section ******************* */
+
+
+#banner{
+    background-image: linear-gradient(to right,  var(--bg-color-blue), var(--bg-color-pink)) !important;
+}
+
+.name{
+    margin-top: 100px;
+    position: relative;
+    top: 50px;
+    left: 50px;
+    /* border: 2px solid white; */
+    width: 80%;
+}
+
+.info{
+    color: #f1ebeb;
+}
+
+.name h1 , h3 {
+    font-weight: 600;
+}
+
+.info .welcome{
+    font-weight: 600;
+}
+
+.button{
+    margin-top: 75px;
+    position: relative;
+    left: 50px;
+}
+
+.button .btn{
+    width: 180px;
+    height: 50px;
+    border: none;
+    background-color: rgb(231 110 110);
+    font-size: 19px;
+    font-weight: 700;
+    color: #fdfafa;
+    border-radius: 10px;
+}
+
+.banner-footer{
+    width: 100%;
+}
+
+/* *************features section***************** */
+
+#features{
+    margin-top: 50px;
+}
+
+.feature-title h2 {
+    text-transform: capitalize;
+    font-size: 45px;
+    font-weight: 700;
+    padding: 15px 0px;
+    text-align: center;
+}
+
+.card{
+    width: 29%;
+    padding: 10px;
+}
+
+.card img{
+    border-radius: 5px;
+}
+
+.card:hover {
+    position: relative;
+    animation-name: fadeUp;
+    animation-duration: 1s;
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeUp {
+    from{
+        opacity: 0;
+        transform: translateY(10px);
+    }    
+    to{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.card .card-body i:hover{
+    cursor: pointer;
+}
+
+h5{
+    text-align: center;
+    font-weight: 600;
+}
+
+.feature-row p {
+    text-align: center;
+    font-size: 17px;
+    line-height: 26px;
+    color: rgb(54 51 51);
+    font-weight: 400;
+}
+
+.arrow{
+    font-size: 30px;
+    padding-left: 10px;
+    color: black;
+}
+
+/* ***********newsletter section**************** */
+#subscribe{
+    margin-top: 100px;
+    margin-bottom: 130px;
+    background-image: linear-gradient(to right,  var(--bg-color-blue), var(--bg-color-pink));
+    padding: 50px 0px;
+}
+
+.newsletter{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.mail-icon{
+    font-size: 70px;
+    color: white;
+    margin-right: 20px;
+}
+
+.sub-title{
+    color: #f1ebeb;
+}
+
+.sub-title h3{
+    font-size: 35px;
+}
+
+.form-area input{
+    height: 62px;
+    width: 364px;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    margin-left: 40px;
+    position: relative;
+    transform: translateX(85px);
+    /* background-color: rgb(231 110 110); */
+}
+
+.form-area button{
+    position: relative;
+    transform: translateX(-55px);
+    padding: 0px 25px;
+    height: 49px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    text-transform: capitalize;
+    background-color: rgb(231 110 110);
+    color: #fdfafa;
+    font-weight: 600;
+
+}
+
+/* ******************* Mail section ******************* */
+#mail{
+    background-image: url('images/email-icon.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.mail-row{
+    padding: 50px 0px;
+}
+
+.mail{
+    position: relative;
+    transform: translateX(300px);
+    padding: 10px;
+    background: rgb(247 249 249);
+    border-radius: 20px;
+}
+
+.mail input{
+    border-radius: 20px;
+    padding: 15px;
+    background:  #e6edf1;
+    /* #b4c1c5 #bdccd1*/
+    border: 1px solid #d7d0d0;
+}
+
+.mail textarea{
+    border-radius: 20px;
+    padding: 15px;
+    background: #e6edf1;
+    /* #d2dbdf */
+    border: 1px solid #d7d0d0;
+}
+
+.mail button{
+    width: 100%;
+    background-image: linear-gradient(to right, var(--bg-color-blue), var(--bg-color-pink));
+    border-radius: 20px;
+    color: #eff2f3;
+}
+
+
+/*=========================== footer section ===========================*/
+
+.footer{
+    background-image: url('images/footer-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-top: 130px;
+}
+
+.footer-top{
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.footer .footer-top .title h5{
+    text-align: left;
+    padding-bottom: 20px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 42px;
+    text-transform: capitalize;
+
+}
+
+.footer .footer-top .desc{
+    text-align: left;
+    padding-right: 120px;
+    color: #606060;
+}
+
+.footer .footer-top .address{
+    padding-top: 20px;
+    padding-left: 0px;
+}
+
+.footer .footer-top .address li{
+    padding-bottom: 15px;
+    color: #606060;
+}
+
+.footer .footer-top .address li i{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: black;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 20px;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer .footer-top .navigation li{
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.footer .footer-top .navigation li::before{
+    content: '';
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background: #ddd;
+    position: absolute;
+    transform: translateY(10px);
+    margin-left: -25px;
+}
+
+.footer .footer-top .navigation li a{
+    display: inline-block;
+    line-height: 26px;
+    font-size: 16px;
+    text-transform: capitalize;
+    text-decoration: none;
+    color: #606060;
+    font-weight: 400;
+}
+
+.footer .footer-top .follow li{
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.footer .footer-top .follow li::before{
+    content: '';
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background: #ddd;
+    position: absolute;
+    transform: translateY(10px);
+    margin-left: -25px;
+}
+
+.footer .footer-top .follow li a{
+    display: inline-block;
+    line-height: 26px;
+    font-size: 16px;
+    text-transform: capitalize;
+    text-decoration: none;
+    color: #606060;
+    font-weight: 400;
+}
+
+.footer p{
+    text-align: left;
+    color: #606060;
+    line-height: 26px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.footer .footer-top .footer-form-area{
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.footer .footer-top .footer-form-area .inputs{
+    width: calc(100% - 60px);
+    height: 40px;
+    padding: 0 10px;
+    background: transparent;
+    outline: none;
+    border: 1px solid rgb(128, 4, 117);
+}
+
+.footer .footer-top .footer-form-area button{
+    width: 60px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: linear-gradient(to right, var(--bg-color-blue), var(--bg-color-pink));
+    border: none;
+    outline: none;
+}
+
+.footer .footer-top .footer-form-area button i{
+    color: white;
+    font-size: 18px;
+}
+
+.footer .footer-top .social li{
+    list-style: none;
+    padding-right: 15px;
+}
+
+.footer .footer-top .social{
+    padding-left: 0px;
+}
+
+.footer .footer-top .social li a{
+    color: black;
+}
+
+.footer .footer-bottom .bg{
+    padding: 20px 0px;
+    border-top: 1px solid #ebebeb;
+}
+
+
+/*================================================
+4.0: profile update
+==================================================*/
+
+/*=========================== update area ===========================*/
+
+
+.update-area .container{
+    padding: 35px 0px;
+}
+
+.update-area{
+    background-image: linear-gradient(to right,  var(--bg-color-blue), var(--bg-color-pink)) !important;
+}
+
+.update-area .update-profile-data-area{
+    border: 1px solid var(--light-orange);
+    padding: 30px 0px;
+}
+
+.update-area .profile-icon{
+    text-align: center;
+}
+
+.update-area .profile-icon i{
+    font-size: 140px;
+    /* font-weight: 400; */
+    color: white;
+}
+
+.update-area .user-data-area{
+    border-left: 1px solid var(--light-orange) ;
+}
+/*=========================== update area -> user-data ===========================*/
+
+.update-area .user-data-group{
+    border-bottom: 1px solid var(--light-orange);
+}
+
+.update-area .user-data{
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 10px;
+}
+
+.update-area .user-data label{
+    display: inline-block;
+    width: 200px;
+    text-transform: capitalize;
+    font-family: --heebo;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--light-gray);
+    padding: 0px 10px;
+}
+
+.update-area .user-data input{
+    height: 30px;
+    width: 50%;
+    border: none;
+    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 400;
+    background: transparent;
+    color: var(--light-gray);
+}
+
+.update-area .form-control:focus, .form-control:active {
+    background: transparent;
+    color: var(--light-gray);
+}
+
+
+#error{
+    color: red;
+}
+
+
+.update-area .update-btn button{
+    width: 30%;
+    height: 40px;
+    margin-top: 15px;
+    background-color: var(--light-orange);
+    color: var(--light-gray);
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    position: relative;
+    transform: translateX(400px);
+}
+
+.update-area .update-btn button:hover{
+    border: 1px solid var(--light-orange);
+    color: var(--light-gray);
+}
+
+/*================================================
+5.0: password update
+==================================================*/
+
+.pass_update{
+    background-image: linear-gradient(to right,  var(--bg-color-blue), var(--bg-color-pink)) !important;
+}
+
+.pass_update .pass-data-area{
+    height: 64vh;
+    position: relative;
+}
+
+.pass-update .container{
+    padding-top: 5px;
+}
+
+.pass-data{
+    padding-top: 10px;
+}
+
+.pass-data label{
+    text-transform: capitalize;
+    font-family: --heebo;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--light-gray);
+}
+
+.pass-data input{
+    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 400;
+    background: transparent;
+    color: var(--light-gray);
+    border: 1px solid rgb(143, 143, 245);
+}
+
+.form-control::placeholder { 
+    color: var(--light-gray);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+.get-otp-btn .btn, .enter-otp-btn .btn, .save-btn .btn{
+    width: 170px;
+    height: 40px;
+    margin: 15px;
+    background-color: var(--light-orange);
+    color: var(--light-gray);
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+}
+
+.get-otp-btn .btn:hover, .enter-otp-btn .btn:hover, .save-btn .btn:hover{
+    background: transparent;
+    border: 1px solid var(--light-blue);
+    color: var(--light-gray);
+}

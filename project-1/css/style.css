@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+*{
+   font-family: 'Poppins', sans-serif;
+   margin:0; padding:0;
+   box-sizing: border-box;
+   outline: none; border:none;
+   text-decoration: none;
+   
+}
+.span{
+   position: absolute;
+   right: 15px;
+   transform: translate(0,-50%);
+   top: 50%;
+   cursor: pointer;
+   
+
+}
+.container{
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content:center;
+   padding:20px;
+   padding-bottom: 60px;
+   
+}
+
+.container .content{
+   text-align: left;
+
+}
+
+.container .content h3{
+   font-size: 30px;
+   color:#333;
+}
+
+.container .content h3 span{
+   background: crimson;
+   color:#fff;
+   border-radius: 5px;
+   padding:0 15px;
+}
+
+.container .content h1{
+   font-size: 50px;
+   color:#333;
+}
+
+.container .content h1 span{
+   color:crimson;
+}
+
+.container .content p{
+   font-size: 25px;
+   margin-bottom: 20px;
+}
+
+.container .content .btn{
+   display: inline-block;
+   padding:10px 30px;
+   font-size: 20px;
+   background: #333;
+   /* background: red; */
+   color:#fff;
+   margin:0 5px;
+   text-transform: capitalize;
+
+}
+
+.container .content .btn:hover{
+   background: crimson;
+   /* color: aqua; */
+
+}
+
+.form-container{
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding:20px;
+   padding-bottom: 60px;
+   background: #eee;   
+   /* background-color:rgb(168, 236, 236); */
+   backdrop-filter:blur(5px);
+   box-shadow: 0 25px 45px rgba(0, 0, 0,0.1);
+   border: 1px solid rgba(255, 255, 255, 0.5);
+   border-right: 1px solid rgba(255, 255, 255, 0.2);
+   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-container form{
+   padding: 45px;
+   border-radius: 15px;
+   box-shadow: 0 15px 15px rgba(5, 88, 165, 0.45);
+   background:blue;
+   text-align:left;
+   width: 500px;
+   background: transparent;
+   /* height: 567px; */
+   border: 0px red;
+   
+}
+
+.form-container form h3{
+   font-size: 30px;
+   text-transform:uppercase;
+   margin-bottom: 10px;
+   color:crimson;
+   text-align:center;
+   height:75px;
+   letter-spacing: 5px;
+   /* background-color: aquamarine; */
+   width:100%;
+   padding: none;
+   border-radius: none;
+   box-shadow: none;
+}
+
+.form-container form input,
+.form-container form select{
+   width: 100%;
+   padding:10px 15px;
+   font-size: 17px;
+   margin:8px 0;
+   background: #eee;
+   border-radius: 5px;
+}
+
+.form-container form select option{
+   background: #fff;
+}
+
+.form-container form .form-btn{
+   background:burlywood;
+   color:crimson;
+   text-transform: capitalize;
+   font-size: 20px;
+   cursor: pointer;
+   border: 0px solid white;
+}
+
+.form-container form .form-btn:hover{
+   background: crimson;
+   color:aqua;
+   letter-spacing: 0.5s;
+   box-shadow:chartreuse;
+}
+
+.form-container form p{
+   margin-top: 10px;
+   font-size: 20px;
+   color:#333;
+}
+
+.form-container form p a{
+   color:crimson;
+}
+
+.form-container form .error-msg{
+   margin:10px 0;
+   display: block;
+   background: crimson;
+   color:#fff;
+   border-radius: 5px;
+   font-size: 20px;
+   padding:10px;
+}
+.p-forget{
+   background-color: blue;
+   letter-spacing: 15px;
+}
+.form-container input{  
+      height: 70px; 
+      width: 93%;
+      padding: 5px 10px;
+      font-size: 16px;
+      border-radius: 5px; 
+      border: 1px solid gray;
+      box-shadow:  0 15px 15px rgba(5, 88, 165, 0.45);
+}
+/* .slides{
+   justify-content:right;
+   align-items: right;
+   background-color:none;
+   box-sizing: 0px;
+   width:15px;
+   height: 15px;
+} */
+   /* background-color: #fff; */
+   /* background:chartreuse; */
+
+ .slides {
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+}
+
+.slides input[type="radio"] {
+   display: none;
+}
+
+.slides label {
+   display: inline-block;
+   width: 10px;
+   height: 10px;
+   border-radius: 50%;
+   margin: 0 10px;
+   background-color: #ccc;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+
+.slides label:hover {
+   background-color: #666;
+}
+
+.slides input[type="radio"]:checked + label {
+   background-color: #666;
+}
+
+/* .cheakbox{
+   justify-content: center;
+   text-align: center;
+   background-color: #333;
+} */
+/* #showPasswordCheckbox:checked ~ #password {
+   visibility: visible;
+}
+#password {
+   visibility: hidden;
+} */
+.span{
+   position: absolute;
+   right: 15px;
+
+}
