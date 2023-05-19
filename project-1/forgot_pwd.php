@@ -12,11 +12,16 @@
     $newPassword = $confirmPassword = $passError = $error = $email = '';
     $status = 0;
 
-    if($_GET['id']){
-        $status = $_GET['id'];
+    try{
+        if($_GET['id']){
+            $status = $_GET['id'];
+            $status = decrypt($status);
+        }
+    }catch(Exception $e){
+        $status = 0;
     }
 
-    function sendMail($email){
+    function sendMail($email, $hashed_id){
         require 'PhpMailer/PHPMailer.php';
         require 'PhpMailer/SMTP.php';
         require 'PhpMailer/Exception.php';
@@ -40,7 +45,7 @@
             //Content
             $mail->isHTML(true);                                  
             $mail->Subject = 'Reset your password';
-            $mail->Body    = 'http://localhost/UserFunction/internship/project-1/forgot_pwd.php?id=2';
+            $mail->Body    = 'http://localhost/UserFunction/web-with-jwt/OpenGitFirstReop/project-1/forgot_pwd.php?id='.$hashed_id.'';
         
             $mail->send();
             return true;
@@ -49,10 +54,37 @@
         }
     }                     
 
+    //encrypting id
+    function encrypt($data){
+        $chipering = 'AES-128-CTR';
+        $option = 0;
+        $env_iv = '1234567890123456';
+        $env_key = 'secretKey';
+        $env = openssl_encrypt($data, $chipering, $env_key, $option, $env_iv);
+        $env = base64_encode($env);
+        return $env;
+    }
+
+    //decrypting id
+    function decrypt($data){
+        $chipering = 'AES-128-CTR';
+        $data = base64_decode($data);
+        $option = 0;
+        $env_iv = '1234567890123456';
+        $env_key = 'secretKey';
+        $data = openssl_decrypt($data, $chipering, $env_key, $option, $env_iv);
+
+        while ($error = openssl_error_string()) {
+            echo "OpenSSL Error: " . $error . "<br>";
+        }
+        return $data;
+    }
+
     if(isset($_POST['sendLink'])){
         $_SESSION['email'] = $_POST['email'];
         $email = $_SESSION['email'];
-        sendMail($email);
+        $hashed_id = encrypt('2');
+        sendMail($email, $hashed_id);
         $status = 1;
     }
     

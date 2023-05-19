@@ -42,7 +42,7 @@
         
             //Content
             $mail->isHTML(true);                                  
-            $mail->Subject = 'Email verification with One Time Password';
+            $mail->Subject = 'Reset your password';
             $mail->Body    = 'One Time Password : '. $otp .'. This one time password will only valid for 60 seconds!';
         
             $mail->send();

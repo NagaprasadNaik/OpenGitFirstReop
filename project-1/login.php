@@ -16,7 +16,18 @@ $error = $limit = $remaining_attempts = $timeout = '';
 $con = mysqli_connect($servername, $username, $password, $database);
 
 
-function sendMail($email){
+//encrypting email
+function encrypt($data){
+   $chipering = 'AES-128-CTR';
+   $option = 0;
+   $env_iv = '1234567890123456';
+   $env_key = 'secretKey';
+   $env = openssl_encrypt($data, $chipering, $env_key, $option, $env_iv);
+   $env = base64_encode($env);
+   return $env;
+}
+
+function sendMail($email, $hashed_email){
     require 'PhpMailer/PHPMailer.php';
     require 'PhpMailer/SMTP.php';
     require 'PhpMailer/Exception.php';
@@ -40,7 +51,7 @@ function sendMail($email){
         //Content 
         $mail->isHTML(true);                                  
         $mail->Subject = 'Email verification.';
-        $mail->Body    = 'http://localhost/UserFunction/internship/project-1/email_verification.php?email='.$email.'';
+        $mail->Body    = 'http://localhost/UserFunction/web-with-jwt/OpenGitFirstReop/project-1/email_verification.php?email='.$hashed_email.'';
     
         $mail->send();
         return true;
@@ -104,7 +115,8 @@ if(isset($_POST['submit'])){
                   header('location:profile.php');
                }else{
                   $_SESSION['email'] = $email;
-                  $flag = sendMail($email);
+                  $hashed_email = encrypt($email);
+                  $flag = sendMail($email, $hashed_email);
                   if($flag){
                      echo "<script>alert('Please verify your email address. Verification link has been sent to your email!')</script>";
                   }else{
@@ -189,7 +201,7 @@ if(isset($_POST['submit'])){
                   </div>
 
                   <div class="forgot-pass">
-                     <p><a href="forgot_pwd.php?id=0">forgot password?</a></p>
+                     <p><a href="forgot_pwd.php?id">forgot password?</a></p>
                   </div> 
 
                   <div class="sbt-btn"> 

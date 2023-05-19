@@ -19,11 +19,19 @@
 
     $nameErr = $phErr = $emailErr = $passErr= $passmatchErr = $isSent ="" ;
     $name_value = $phone_value = $email_value = $pass_value = $pass2_value="";
-    // $_SESSION['login_attempts'] = 0 ;
-    // $_SESSION['locked'] = '';
 
+    //encrypting email
+    function encrypt($data){
+        $chipering = 'AES-128-CTR';
+        $option = 0;
+        $env_iv = '1234567890123456';
+        $env_key = 'secretKey';
+        $env = openssl_encrypt($data, $chipering, $env_key, $option, $env_iv);
+        $env = base64_encode($env);
+        return $env;
+    }
 
-    function sendMail($email){
+    function sendMail($email, $hashed_email){
         require 'PhpMailer/PHPMailer.php';
         require 'PhpMailer/SMTP.php';
         require 'PhpMailer/Exception.php';
@@ -46,8 +54,8 @@
         
             //Content
             $mail->isHTML(true);                                  
-            $mail->Subject = 'Reset your password';
-            $mail->Body    = 'http://localhost/UserFunction/internship/project-1/email_verification.php?email='.$email.'';
+            $mail->Subject = 'Email verification';
+            $mail->Body    = 'http://localhost/UserFunction/web-with-jwt/OpenGitFirstReop/project-1/email_verification.php?email='.$hashed_email.'';
         
             $mail->send();
             return true;
@@ -170,29 +178,30 @@
             $_SESSION['status'] = false;
             $_SESSION['logged'] = true;
                 
-                    $sql = "INSERT INTO user (name,phone,email,password,role) VALUES ('$username','$phone','$email','$password','user')";
-                    //Send mail to user
-                    try{
-                        $result = mysqli_query($con,$sql);
-                        $isSent = sendMail($email);
-                        if($isSent){
-                            ?>
-                                <script>
-                                        alert('Email verification link hass been sent to your email address. Please verify.');
-                                        window.location = 'login.php';
-                                </script>
-                            <?php
-                        }else{
-                            ?>
-                            <script>
-                                    alert('Invalid email address.');
-                                    window.location = 'registration.php';
-                            </script>
-                        <?php
-                        }
-                    }catch(Exception $e){
-                        echo "<script>alert('Error: please try after some time.')</script>";
-                    }
+            $sql = "INSERT INTO user (name,phone,email,password,role) VALUES ('$username','$phone','$email','$password','user')";
+            //Send mail to user
+            try{
+                $result = mysqli_query($con,$sql);
+                $hashed_email = encrypt($email);
+                $isSent = sendMail($email, $hashed_email);
+                if($isSent){
+                    ?>
+                        <script>
+                                alert('Email verification link hass been sent to your email address. Please verify.');
+                                window.location = 'login.php';
+                        </script>
+                    <?php
+                }else{
+                    ?>
+                    <script>
+                            alert('Invalid email address.');
+                            window.location = 'registration.php';
+                    </script>
+                <?php
+                }
+            }catch(Exception $e){
+                echo "<script>alert('Error: please try after some time.')</script>";
+            }
                     
             }
         }
