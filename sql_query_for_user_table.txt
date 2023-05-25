@@ -1,0 +1,40 @@
+## creates user database
+
+CREATE DATABASE user;
+
+
+## Table structure for table `user`
+
+CREATE TABLE `user` (
+  `uid` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `phone` bigint(10) NOT NULL,
+  `email` text NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `otp` int(10) DEFAULT NULL,
+  `date_time` datetime DEFAULT NULL,
+  `otp_status` int(10) NOT NULL,
+  `otp_attempts` int(10) NOT NULL,
+  `mail_status` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+## AUTO_INCREMENT for table `user`
+
+ALTER TABLE `user`
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+COMMIT;
+
+
+## Indexes for table `user`
+
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`uid`);
+
+
+## Dumping data for table `user`
+
+INSERT INTO `user` (`uid`, `name`, `phone`, `email`, `password`, `role`, `status`, `otp`, `date_time`, `otp_status`, `otp_attempts`, `mail_status`) VALUES
+(1, 'admin', 9999988888, 'admin123@gmail.com', 'Test@111', 'admin', 1, NULL, NULL, 0, 0, 1);

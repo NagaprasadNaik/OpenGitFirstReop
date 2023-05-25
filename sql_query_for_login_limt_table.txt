@@ -1,0 +1,25 @@
+## creates user database
+
+CREATE DATABASE user;
+
+
+## Table structure for table `login_limit`
+
+CREATE TABLE `login_limit` (
+  `id` int(10) NOT NULL,
+  `ip` varchar(50) NOT NULL,
+  `login_time` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+## AUTO_INCREMENT for table `login_limit`
+
+ALTER TABLE `login_limit`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
+COMMIT;
+
+
+## Indexes for table `login_limit`
+
+ALTER TABLE `login_limit`
+  ADD PRIMARY KEY (`id`);
