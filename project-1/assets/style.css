@@ -26,7 +26,6 @@ body{
 ==================================================*/
 .box{
     background-color: #ebeeef;
-
 }
 
 .registration .container {
@@ -57,7 +56,6 @@ body{
 
 .registration .container .data .form-floating{
     margin-top: 10px;
-    /* margin-bottom: 15px; */
 }
 
 .registration .container .data .form-floating input{
@@ -66,7 +64,6 @@ body{
     margin: 0 auto;
     color: black !important;
     text-align: center;
-    /* background: #f6f8f9; */
 }
 
 .registration .container .data .form-floating label{
@@ -109,9 +106,106 @@ body{
 }
 
 .registration .container .data p a{
-    /* text-decoration: none; */
     color: var(--btn-lbl-color);
 }
+
+@media (max-width: 1200px){
+    .registration .container {
+        margin: 25px auto;
+        border-radius: 10px;
+        width: 900px;
+        height: 80%;
+    }
+
+    .registration .image{
+        width: 46%;
+    }
+
+    .registration .data{
+        width: 46%;
+    }
+}
+
+@media (max-width: 992px){
+    .registration .container {
+        width: 400px;
+        height: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -54%);
+    } 
+
+    .registration .image{
+        display: none;
+    }
+
+    .registration .data{
+        width: 400px;
+    }
+
+    .registration .form{
+        width: 400px;
+        height: 480px;
+        margin-top: 2px;
+        margin-left: 12px;
+    }
+
+    .registration .form .form-heading h4{
+        font-size: 20px;
+    }
+
+    .registration .container .data .form-floating {
+        margin: 0;
+    }
+
+    .registration .container .data .form-floating input {
+        width: 80%;
+        height: 44px;
+        margin: 0 auto;
+        color: black !important;
+        text-align: center;
+    }
+
+    .registration .container .data .form-floating label {
+        padding: 5px;
+        margin-left: 50px;
+        color: var(--btn-lbl-color);
+        font-size: 15px;
+    }
+
+    .registration .container .data .checkbox {
+        margin-left: 37px;
+        margin-top: 10px;
+        font-size: 15px;
+    }
+
+    .registration .container .data .submit {
+        display: flex;
+        justify-content: center;
+        margin: 8px 0;
+    }
+
+    .registration .container .data .submit input {
+        width: 80%;
+        background: var(--btn-lbl-color);
+        color: #f7f5f5;
+        font-size: 15px;
+        font-weight: 700; 
+        text-transform: capitalize;
+        padding: 6px;
+    }
+
+    .registration .container .data p {
+        text-transform: capitalize;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 400;
+    }
+}
+
+
+
 
 /*================================================
 1.1: forgot password
@@ -124,7 +218,6 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -46%);
-    /* border: 1px solid black; */
 }
 
 .forgot_pwd .form-box h3{
@@ -228,6 +321,49 @@ body{
     font-size: 50px;
 }
 
+@media (max-width: 930px){
+
+    .forgot_pwd .form-box h3 {
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 22px;
+    }
+
+    .forgot_pwd .form-box p {
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 28px;
+    }
+
+    .forgot_pwd .form-box .floating input {
+        width: 66%;
+        margin: 0 17%;
+    }
+
+    .forgot_pwd .form-box .floating label {
+        position: absolute;
+        left: 0;
+        padding: 12px 82px;
+        text-transform: capitalize;
+        transition: 0.2s;
+    }
+
+    .forgot_pwd .form-box .floating input:valid ~ label,
+    .forgot_pwd .form-box .floating input:focus ~ label{
+        transform: translate(10px, -7px);
+        font-size: 15px;
+        padding: 0px;
+        margin-left: 64px;
+        background-color: white;
+        color: rgb(5, 151, 107);
+    }
+
+    .forgot_pwd .form-box .sbt-btn .submit {
+        width: 66%;
+        margin: 10px 17%;
+    }
+
+}
 
 /*================================================
 2.0: login
@@ -307,7 +443,6 @@ body{
 .login-area .form-floating label{
     margin-left: 20px;
     color: var(--btn-lbl-color);
-    /* background: #f6f8f9; */
 }
 
 .login-area .forgot-pass{
@@ -347,6 +482,160 @@ body{
     color: red;
 }
 
+
+@media (max-width: 1200px){
+    .login-area .container{
+        width: 760px;
+        height: 80%;
+    }
+
+    .login-area .form-container{
+        width: 250px;
+        height: auto;
+        margin-top: 10px;
+        margin-left: 40px;
+    }
+
+    .login-area .error {
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .login-area .heading h3{
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 28px;
+        color: var(--btn-lbl-color);
+        padding: 5px 0px;
+    }
+    
+    .login-area .form-floating i{
+        position: absolute;
+        text-align: left;
+        transform: translate(205px, 20px);
+    }
+
+    .login-area .form-floating input{
+        font-size: 15px;
+    }
+
+    .login-area .sbt-btn p {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 992px){
+    .login-area .container {
+        width: 400px;
+        height: 80%;
+    }
+
+    .login-area .login-img{
+        display: none;
+    }
+
+    .login-area .login-fields{
+        width: 400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 5px;
+    }
+
+    .login-area .form-container {
+        width: 250px;
+        height: auto;
+        margin: 10px auto;
+    }
+
+    .login-area .heading h3{
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 31px;
+        color: var(--btn-lbl-color);
+        padding: 5px 0px;
+    }
+
+    .login-area .form-floating input{
+        width: 100%;
+        font-size: 15px;
+    }
+
+    .login-area .form-floating label {
+        margin-left: 5px;
+    }
+
+    .login-area .form-floating i {
+        position: absolute;
+        text-align: left;
+        transform: translate(199px, 20px);
+    }
+
+    .login-area .forgot-pass {
+        font-size: 15px;
+        padding: 2px 16px;
+    }
+
+    .login-area .sbt-btn input {
+        margin: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 575px){
+
+    .login-area .container {
+        width: 100px;
+        height: 80%;
+    }
+
+    .login-area .login-fields{
+        width: 250px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 5px;
+    }
+
+    .login-area .error {
+        text-align: center;
+        font-size: 10px;
+        margin-bottom: 10px;
+    }
+
+    .login-area .heading h3{
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 25px;
+        color: var(--btn-lbl-color);
+        padding: 5px 0px;   
+    }
+
+    .login-area .form-floating label {
+        margin : -10px;
+        margin-left: 1px;
+    }
+
+    .login-area .forgot-pass {
+        font-size: 15px;
+        padding: 2px 6px;
+    }
+
+    .login-area .sbt-btn p {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 13px;
+    }
+}
+
+
+
 /*================================================
 3.0: home
 ==================================================*/
@@ -364,6 +653,10 @@ body{
 #main-logo{
     width: 135px;
     height: 80px;
+}
+
+.navbar .container .bar{
+    display: none;
 }
 
 .navbar-nav li{
@@ -386,10 +679,9 @@ body{
 
 
 .navbar-nav .nav-item .nav-link:hover::after{
-    /* color: rgb(231 117 117) !important; */
     width: 100%;
 }
-/* 239 136 100 251 201 108*/
+
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0; /* remove the gap so it doesn't close */
@@ -407,7 +699,6 @@ body{
     position: relative;
     top: 50px;
     left: 50px;
-    /* border: 2px solid white; */
     width: 80%;
 }
 
@@ -441,7 +732,7 @@ body{
 }
 
 .banner-footer{
-    width: 100%;
+    width: 100%;    
 }
 
 /* *************features section***************** */
@@ -546,7 +837,6 @@ h5{
     margin-left: 40px;
     position: relative;
     transform: translateX(85px);
-    /* background-color: rgb(231 110 110); */
 }
 
 .form-area button{
@@ -773,13 +1063,164 @@ h5{
     border-top: 1px solid #ebebeb;
 }
 
+@media screen and (max-width: 1200px){
+
+    *{
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+    }    
+
+
+    .data-col{
+        margin-left: 17px;
+    }
+
+    .data-col .name h1{
+        font-size: 34px;
+        font-weight: 600;
+    }
+
+    .data-col .name p{
+        font-size: 15px;
+    }
+
+    .data-col .button .btn{
+        width: 165px;
+        height: 47px;
+    }
+
+    .data-img-col{
+        margin-left: 30px;
+        /* border: 1px solid gray; */
+    }
+    
+    .data-img-col #profile-image{
+        width: 350px !important;
+        height: auto;
+        margin-left: 7px;   
+    }
+
+    .feature-row .feature-row-col1 .feature-title h2{
+        font-size: 40px;
+        padding: 10px 0px;
+    }
+
+    .feature-row .feature-row-col1 .feature-title p{
+        font-size: 13px;
+    }
+
+    .feature-row .feature-row-col2{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .feature-row .feature-row-col2 .card .card-body h5{
+        font-size: 19px;
+    }
+
+    .feature-row .feature-row-col2 .card .card-body p{
+        font-size: 13px;
+    }
+
+    .feature-row .feature-row-col2 .card .card-body .arrow{
+        font-size: 25px;
+    }
+
+    #subscribe .newsletter .mail-icon{
+        font-size: 50px;
+    }
+
+    #subscribe .newsletter .sub-title h3{
+        font-size: 27px;
+    }
+
+    #subscribe .newsletter .sub-title p{
+        font-size: 14px;
+    }
+
+    #subscribe .newsletter .form-area input{
+        height: 51px;
+        width: 319px;
+        padding: 20px;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        margin-left: 40px;
+        position: relative;
+        transform: translateX(85px);
+    }
+
+    #subscribe .newsletter .form-area button {
+        position: relative;
+        transform: translateX(-41px);
+        padding: 0px 19px;
+        height: 40px;
+    }
+
+    #mail .mail-row .mail{
+            width: 330px;
+    }
+}
+
+@media screen and (max-width: 992px){
+    .navbar .container{
+        padding: 0;
+    }
+
+    .navbar .container #bar{
+        display: block;
+        color: white;
+        position: absolute;
+        transform: translateX(700px);
+    }
+
+    .navbar .nav-ul{
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 300px;
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all .55s ease-in-out;
+    }
+
+    .navbar .nav-ul.open{
+        right: 0;
+    }
+
+    #banner .container .row{
+        justify-content: center;
+    }
+
+    #banner .data-img-col{
+        display: none;
+    }
+
+    .data-col{
+        height: 336px;
+    }
+    
+    .data-col .name{
+        position: relative;
+        top: -25px; 
+    }
+
+    .data-col .button{
+        position: relative;
+        top: -81px;
+    }
+}
 
 /*================================================
 4.0: profile update
 ==================================================*/
 
-/*=========================== update area ===========================*/
 
+/*=========================== update area ===========================*/
 
 .update-area .container{
     padding: 35px 0px;
@@ -800,7 +1241,6 @@ h5{
 
 .update-area .profile-icon i{
     font-size: 140px;
-    /* font-weight: 400; */
     color: white;
 }
 
@@ -841,6 +1281,11 @@ h5{
     font-weight: 400;
     background: transparent;
     color: var(--light-gray);
+}
+
+.update-area .user-data #password{
+    padding-top: 24px;
+    font-size: 30px;
 }
 
 .update-area .form-control:focus, .form-control:active {
@@ -915,7 +1360,7 @@ h5{
     color: var(--light-gray);
     font-size: 14px;
     font-weight: 300;
-  }
+}
 
 .get-otp-btn .btn, .enter-otp-btn .btn, .save-btn .btn{
     width: 170px;

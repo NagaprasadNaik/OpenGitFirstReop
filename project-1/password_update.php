@@ -3,21 +3,51 @@
     @include 'db.php';
 
     session_start();
+
+    //importing files for jwt-token
+    require('php-jwt/src/BeforeValidException.php');
+    require('php-jwt/src/CachedKeySet.php');
+    require('php-jwt/src/ExpiredException.php');
+    require('php-jwt/src/JWK.php');
+    require('php-jwt/src/JWT.php');
+    require('php-jwt/src/Key.php');
+    require('php-jwt/src/SignatureInvalidException.php');
+
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
+    
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;  
     
     if(!$_SESSION['logged']){
         header('location : login.php');
     }
 
-    $email = $_SESSION['email'];
+    //Decoding token
+    $token = $_SESSION['token'];
+    try{
+        //retutns a stdClass object
+        $row = JWT::decode($token, new Key('secretKey', 'HS256'));
+        }catch(Exception $e){
+        ?>
+            <script>
+                alert('Server not responding. Please try after some time');
+                window.location = 'logout.php';
+            </script>
+        <?php
+    }
+
+    //Extracting data from stdClass object and initilizing to variables
+    $id = $row->id;
+    $name = $row->name;
+    $email = $row->email;
+    $phone = $row->phone;
+    $role = $row->role;
+    
+    // $email = $_SESSION['email'];
     $status = 0;
     $confirmPassword = $newPassword = $error = $passError = '';
-    // Create connection
-    $con = mysqli_connect($servername, $username, $password, $database);
-
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;  
-
 
     function sendMail($otp, $email){
         require 'PhpMailer/PHPMailer.php';
@@ -53,18 +83,22 @@
     }
 
     if(isset($_POST['get-otp'])){
-        // if($_POST['email']){
-        //     $email = $_POST['email'];
-        // }else{
-        //     $emailError = "Please enter email!";
-        // }
 
         $otp = random_int(111111, 999999);
-        $flag = sendMail($otp, $email);
-        
-        if($flag){
+        try{
             $sql = "UPDATE `user` SET `otp`= $otp, `date_time` = now() WHERE email = '$email' ";
             $result =  mysqli_query($con, $sql);
+            $flag = sendMail($otp, $email);
+        }catch(Exception $e){
+            ?>
+                <script>
+                alert('Server not responding. Please try after some time');
+                window.location = 'profile.php';
+                </script>
+            <?php
+        }
+        
+        if($flag){
             $status = 1;
             echo '<script>alert("OTP has been sent to your email address!. Please check your Email!")</script>';
         }else{
@@ -77,18 +111,27 @@
     if(isset($_POST['enter-otp'])){
         $otp2 = $_POST['otp'];
         if($otp2 != ''){
-            $sql2 = "SELECT * FROM `user` WHERE otp = $otp2 AND now() <= date_add(date_time, INTERVAL 1 MINUTE) ";
-            $result2 =  mysqli_query($con, $sql2);
-            $row = mysqli_fetch_assoc($result2);
+
+            try{
+                $sql2 = "SELECT * FROM `user` WHERE otp = $otp2 AND now() <= date_add(date_time, INTERVAL 1 MINUTE) ";
+                $result2 =  mysqli_query($con, $sql2);
+                $row = mysqli_fetch_assoc($result2);
+            }catch(Exception $e){
+                ?>
+                <script>
+                    alert('Server not responding. Please try after some time');
+                    window.location = 'profile.php';
+                </script>
+            <?php
+            }
+
             if($row){
-                // $email = $_POST['email'];
                 $status = 2;
             }else{
                 echo "<script>alert('Invalid OTP!')</script>";
                 $status = 0;
             }
         }else{
-            // $email = $_POST['email'];
             $error = 'Please enter OTP';
             $status = 1;
         }
@@ -126,14 +169,62 @@
                 $error= "Confirm Password does not match!";   
                 $status = 2;
             }else{
-                $sql3 = "UPDATE `user` SET password = '$newPassword' WHERE email = '$email' ";
-                $result3 = mysqli_query($con, $sql3);
-                if($result3){
-                    $_SESSION['status'] = true;
-                    header('location: profile.php');
+
+                try{
+                    $hashed_password = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $sql3 = "UPDATE `user` SET password = '$hashed_password' WHERE email = '$email' ";
+                    $result3 = mysqli_query($con, $sql3);
+
+                    $sql4 = "SELECT * FROM user WHERE email='$email'";
+                    $result4 = mysqli_query($con, $sql4);
+                    $row = mysqli_fetch_assoc($result4);
+                }catch(Exception $e){
+                    ?>
+                        <script>
+                            alert('Server not responding. Please try after some time');
+                            window.location = 'profile.php';
+                        </script>
+                    <?php
+                }
+
+                if($result4){
+
+                    //token generation 
+                    $key = "secretKey";
+                    $payload = array(
+                        "id" => $row['uid'],
+                        "name" => $row['name'],
+                        "email" => $row['email'],
+                        "phone" => $row['phone'],
+                        "password" => $row['password'],
+                        "role" => $row['role']
+                    );
+
+                    try{
+                        $token = JWT::encode($payload, $key, 'HS256');
+                        $_SESSION['token'] = $token;
+                    }catch(Exception $e){
+                        ?>
+                        <script>
+                            alert('Server error. Please try after some time');
+                            window.location = 'profile.php';
+                        </script>
+                        <?php
+                    }
+
+                    ?>
+                        <script>
+                            alert('Updated successfully.');
+                            window.location = 'profile.php';
+                        </script>
+                    <?php
                 }else{
-                    $_SESSION['status'] = false;
-                    header('loaction: password_update.php');
+                    ?>
+                    <script>
+                       alert('Server not responding. Please try after some time');
+                       window.location = 'profile.php';
+                    </script>
+                 <?php
                 }
             }
         }

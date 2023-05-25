@@ -2,7 +2,6 @@
 
     @include('db.php');
 
-    $con = mysqli_connect($servername, $username , $password, $database);
     $hashed_email = $_GET['email'];
 
     //decrypting email

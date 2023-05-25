@@ -2,25 +2,47 @@
     @include 'db.php';
     
     session_start();
+
+    //importing files for jwt-token
+    require('php-jwt/src/BeforeValidException.php');
+    require('php-jwt/src/CachedKeySet.php');
+    require('php-jwt/src/ExpiredException.php');
+    require('php-jwt/src/JWK.php');
+    require('php-jwt/src/JWT.php');
+    require('php-jwt/src/Key.php');
+    require('php-jwt/src/SignatureInvalidException.php');
+
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
+    
     
     if(!$_SESSION['logged']){
         header('location : login.php');
     }
-    
-    // Create connection
-    $con = mysqli_connect($servername, $username, $password, $database);
 
-
-    if(isset($_SESSION['email'])){
-        $email = $_SESSION['email'];
-        $sql = "SELECT * FROM `user` WHERE email ='$email'";
-        $result = mysqli_query($con, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $name = $row['name'];
-        $phone = $row['phone'];
-        $password = $row['password'];
-        $noChangeError = $nameError = $numError = $phoneError = $emailError = '';
+    //Decoding token
+    $token = $_SESSION['token'];
+    try{
+        //retutns a stdClass object
+        $row = JWT::decode($token, new Key('secretKey', 'HS256'));
+        }catch(Exception $e){
+        ?>
+            <script>
+                alert('Server not responding. Please try after some time');
+                window.location = 'login.php';
+            </script>
+        <?php
     }
+
+    //Extracting data from stdClass object and initilizing to variables
+    $id = $row->id;
+    $name = $row->name;
+    $email = $row->email;
+    $password = $row->password;
+    $phone = $row->phone;
+    $role = $row->role;
+    $noChangeError = $nameError = $numError = $phoneError = $emailError = '';
+
 
     if(isset($_POST['update'])){
         $updated_name = $_POST['name'];
@@ -55,9 +77,15 @@
         }else if(!filter_var($updated_email, FILTER_VALIDATE_EMAIL)){
             $emailError = "Invalid Email address!";
         }else if($updated_email != $email){
-            $sql3 = "SELECT * FROM user WHERE email = '$updated_email'";
-            $result3 = mysqli_query($con, $sql3);
-            $num = mysqli_num_rows($result3);
+
+            try{
+                $sql3 = "SELECT * FROM user WHERE email = '$updated_email'";
+                $result3 = mysqli_query($con, $sql3);
+                $num = mysqli_num_rows($result3);
+            }catch(Exception $e){
+               echo '';
+            }
+
             if($num > 0){
                 $emailError = "Email address already exist!";
             }else{    
@@ -80,20 +108,55 @@
             $email = $updated_email;
             $phone = $updated_phone;
         }
-
-        //db query execution 
+        
         if($nameError == '' && $numError == '' && $phoneError == '' && $emailError == '' && $noChangeError == ''){
+            //db query execution 
+            try{
+                $sql2 = "UPDATE user SET email='$updated_email', name='$updated_name', phone='$updated_phone', password='$updated_password' WHERE email='$email'";
+                $result2 = mysqli_query($con, $sql2);
 
-            $sql2 = "UPDATE user SET email='$updated_email', name='$updated_name', phone='$updated_phone', password='$updated_password' WHERE email='$email'";
-
-            $result2 = mysqli_query($con, $sql2);
+                $sql4 = "SELECT * FROM user WHERE email='$updated_email'";
+                $result4 = mysqli_query($con, $sql4);
+                $row = mysqli_fetch_assoc($result4);
+            }catch(Exception $e){
+                ?>
+                    <script>
+                    alert('Server not responding. Please try after some time');
+                    window.location = 'profile.php';
+                    </script>
+                <?php
+            }
 
             if($result2){
-                $_SESSION['email'] = $updated_email;
-                $_SESSION['status'] = true;
-                header('location: profile.php');
-            }else{
-                $_SESSION['email'] = $email;
+                //token generation 
+                $key = "secretKey";
+                $payload = array(
+                    "id" => $row['uid'],
+                    "name" => $row['name'],
+                    "email" => $row['email'],
+                    "phone" => $row['phone'],
+                    "password" => $row['password'],
+                    "role" => $row['role']
+                );
+
+                try{
+                    $token = JWT::encode($payload, $key, 'HS256');
+                    $_SESSION['token'] = $token;
+                }catch(Exception $e){
+                    ?>
+                    <script>
+                        alert('Server error. Please try after some time');
+                        window.location = 'profile.php';
+                    </script>
+                    <?php
+                }
+
+                ?>
+                    <script>
+                    alert('Updated successfully.');
+                    window.location = 'profile.php';
+                    </script>
+                <?php
             }
         }
     }
@@ -195,7 +258,7 @@
                                 <div class="user-data-group">
                                     <div class="user-data">
                                         <label for="password" class="form-label">Password<span id="error">*</span> : </label>
-                                        <input type="text" class="form-control" name="password" readonly value="<?php echo $password ?>">
+                                        <input type="text" class="form-control" id="password" name="password" readonly value="**********">
                                     </div>
                                 </div>
                                 <div class="d-flex update-btn">

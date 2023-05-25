@@ -8,8 +8,6 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception; 
 
-    $con = mysqli_connect($servername, $username, $password, $database);
-
 	function testinput($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -123,9 +121,13 @@
                 $pass_value=$password;
                 $pass2_value=$confirmpass;
             }else{
-        
-                $sql= "SELECT * FROM `user` WHERE email = '$email'";
-                $result=mysqli_query($con, $sql);
+                
+                try{
+                    $sql= "SELECT * FROM `user` WHERE email = '$email'";
+                    $result=mysqli_query($con, $sql);
+                }catch(Exception $e){
+                   echo "";
+                }
 
                 if (mysqli_num_rows($result) > 0 ){
                     $emailErr = "This Email id already exists";
@@ -177,8 +179,9 @@
             $_SESSION['email'] = $email;
             $_SESSION['status'] = false;
             $_SESSION['logged'] = true;
-                
-            $sql = "INSERT INTO user (name,phone,email,password,role) VALUES ('$username','$phone','$email','$password','user')";
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            $sql = "INSERT INTO user (name,phone,email,password,role) VALUES ('$username','$phone','$email','$hashed_password','user')";
             //Send mail to user
             try{
                 $result = mysqli_query($con,$sql);

@@ -1,8 +1,19 @@
 <?php
 
+session_start();
+
 @include 'db.php'; 
 
-session_start();
+require('php-jwt/src/BeforeValidException.php');
+require('php-jwt/src/CachedKeySet.php');
+require('php-jwt/src/ExpiredException.php');
+require('php-jwt/src/JWK.php');
+require('php-jwt/src/JWT.php');
+require('php-jwt/src/Key.php');
+require('php-jwt/src/SignatureInvalidException.php');
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -12,8 +23,6 @@ use PHPMailer\PHPMailer\Exception;
 $_SESSION['status'] = false;
 $_SESSION['flag'] = false;
 $error = $limit = $remaining_attempts = $timeout = '';
-
-$con = mysqli_connect($servername, $username, $password, $database);
 
 
 //encrypting email
@@ -65,12 +74,22 @@ if(isset($_POST['submit'])){
    
    $email = $_POST['email'];
    $pass = $_POST['password'];
-
    $ip = $_SERVER['REMOTE_ADDR'];   
    $login_time = time() - 15;
-   $sql = "SELECT count(*) as total_count FROM login_limit WHERE ip='$ip' AND login_time>'$login_time'";
-   $result = mysqli_query($con, $sql);
-   $row = mysqli_fetch_assoc($result);
+
+   try{
+      $sql = "SELECT count(*) as total_count FROM login_limit WHERE ip='$ip' AND login_time>'$login_time'";
+      $result = mysqli_query($con, $sql);
+      $row = mysqli_fetch_assoc($result);
+   }catch(Exception $e){
+      ?>
+      <script>
+          alert('Server not responding. Please try after some time');
+          window.location = 'login.php';
+      </script>
+      <?php
+   }
+
    $count = $row['total_count'];
    $count++;
    $remaining_attempts = 3 - $count;
@@ -84,34 +103,104 @@ if(isset($_POST['submit'])){
          $limit = 'Remainig attempts '.$remaining_attempts;
          $ip = $_SERVER['REMOTE_ADDR'];
          $login_time = time();
-         $sql = "INSERT INTO login_limit(ip, login_time) VALUES('$ip', '$login_time')";
-         $result = mysqli_query($con, $sql);
+
+         try{
+            $sql = "INSERT INTO login_limit(ip, login_time) VALUES('$ip', '$login_time')";
+            $result = mysqli_query($con, $sql);
+         }catch(Exception $e){
+            echo "";
+         }
+
       }else{
-
-         $con = mysqli_connect($servername, $username, $password, $database);
          
-         $select = "SELECT * FROM user WHERE email = '$email' && password = '$pass' ";
+         try{
 
-         $result = mysqli_query($con, $select);
+            $select = "SELECT * FROM user WHERE email = '$email'";
+            $result = mysqli_query($con, $select);
 
+         }catch(Exception $e){
+            ?>
+            <script>
+                alert('Server not responding. Please try after some time');
+                window.location = 'login.php';
+            </script>
+            <?php
+         }
 
          if(mysqli_num_rows($result) > 0){
-
             $row = mysqli_fetch_assoc($result);
+            $hashed_password = $row['password'];
+         }else{
+            $error = 'Incorrect email or password!.';
+            $limit = 'Remainig attempts '.$remaining_attempts;
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $login_time = time();
+
+            try{
+               $sql = "INSERT INTO login_limit(ip, login_time) VALUES('$ip', '$login_time')";
+               $result = mysqli_query($con, $sql);
+            }catch(Exception $e){
+               echo "";
+            }
+         }
+
+         if(password_verify($pass, $hashed_password)){
+            
+            // try{
+            //    $row = mysqli_fetch_assoc($result);
+            // }catch(Exception $e){
+            //    echo "";
+            // }
 
             if($row['role'] == 'admin'){
                $_SESSION['logged'] = true;
                $_SESSION['email'] = $row['email'];
                $_SESSION['role'] = $row['role'];
-               $sql = "DELETE FROM login_limit WHERE ip='$ip'";
-               $result = mysqli_query($con, $sql);
-               header('location:admin.php');
-            }elseif($row['role'] == 'user'){
-               if($row['mail_status'] == 1){
-                  $_SESSION['logged'] = true;
-                  $_SESSION['email'] = $row['email'];
+
+               try{
                   $sql = "DELETE FROM login_limit WHERE ip='$ip'";
                   $result = mysqli_query($con, $sql);
+               }catch(Exception $e){
+                  echo "";
+               }
+
+               header('location:admin.php');
+            }elseif($row['role'] == 'user'){
+
+               if($row['mail_status'] == 1){
+                  //token generation 
+                  $key = "secretKey";
+                  $payload = array(
+                        "id" => $row['uid'],
+                        "name" => $row['name'],
+                        "email" => $row['email'],
+                        "phone" => $row['phone'],
+                        "password" => $row['password'],
+                        "role" => $row['role']
+                  );
+
+                  try{
+                     $token = JWT::encode($payload, $key, 'HS256');
+                  }catch(Exception $e){
+                     ?>
+                        <script>
+                           alert('Server error. Please try after some time');
+                           window.location = 'registration.php';
+                        </script>
+                     <?php
+                  }
+
+                  $_SESSION['logged'] = true;
+                  $_SESSION['token'] = $token;
+
+                  // $_SESSION['email'] = $row['email'];
+                  try{
+                     $sql = "DELETE FROM login_limit WHERE ip='$ip'";
+                     $result = mysqli_query($con, $sql);
+                  }catch(Exception $e){
+                     echo "";
+                  }
+
                   header('location:profile.php');
                }else{
                   $_SESSION['email'] = $email;
@@ -129,8 +218,13 @@ if(isset($_POST['submit'])){
             $limit = 'Remainig attempts '.$remaining_attempts;
             $ip = $_SERVER['REMOTE_ADDR'];
             $login_time = time();
-            $sql = "INSERT INTO login_limit(ip, login_time) VALUES('$ip', '$login_time')";
-            $result = mysqli_query($con, $sql);
+
+            try{
+               $sql = "INSERT INTO login_limit(ip, login_time) VALUES('$ip', '$login_time')";
+               $result = mysqli_query($con, $sql);
+            }catch(Exception $e){
+               echo "";
+            }
          }
       }
    }         

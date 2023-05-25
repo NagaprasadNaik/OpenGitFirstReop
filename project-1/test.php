@@ -25,3 +25,9 @@
             <label for="email">Email</label>
             <input type="text" id="email" name="email" required placeholder="Email">
          </div> -->
+
+         <!-- try{
+
+}catch(Exception $e){
+   
+} -->

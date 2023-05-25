@@ -4,28 +4,53 @@
 
     session_start();
 
+    //importing files for jwt-token
+    require('php-jwt/src/BeforeValidException.php');
+    require('php-jwt/src/CachedKeySet.php');
+    require('php-jwt/src/ExpiredException.php');
+    require('php-jwt/src/JWK.php');
+    require('php-jwt/src/JWT.php');
+    require('php-jwt/src/Key.php');
+    require('php-jwt/src/SignatureInvalidException.php');
+
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
+
     if(!$_SESSION['logged']){
         header('location : login.php');
     }
 
-    // Create connection
-    $con = mysqli_connect($servername, $username, $password, $database);
 
     // Check connection
     if (!$con) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-
     //checking request parameter is set or not.
     if(isset($_GET['email'])){
         $_SESSION['email'] = $_GET['email'];
     }
+    
+    //Decoding token
+    $token = $_SESSION['token'];
+    try{
+        //retutns a stdClass object
+        $row = JWT::decode($token, new Key('secretKey', 'HS256'));
+     }catch(Exception $e){
+        ?>
+           <script>
+              alert('Server not responding. Please try after some time');
+              window.location = 'login.php';
+           </script>
+        <?php
+    }
 
-    $email = $_SESSION['email'];
-    $sql = "SELECT * FROM `user` WHERE email ='$email'";
-    $result = mysqli_query($con, $sql);    
-    $row = mysqli_fetch_assoc($result);
+    //Extracting data from stdClass object and initilizing to variables
+    $id = $row->id;
+    $name = $row->name;
+    $email = $row->email;
+    $phone = $row->phone;
+    $role = $row->role;
 
     if($_SESSION['status']){
     ?>
@@ -131,9 +156,7 @@
         }
 
         if ($flag){
-        $sub =$subject;
-        $mes = $message;
-            if(sendMail($to,$sub,$mes,$email)){
+            if(sendMail($to,$subject,$message,$email)){
                 ?>   
                 <script>
                     window.addEventListener('load', function(){
@@ -186,25 +209,30 @@
     <div class="logo">
         <a href="profile.php" ><img id="main-logo" src="assets/images/PROFILE-bg.png" /></a>
     </div>
-    <ul class="navbar-nav ml-auto ">
-        <li class="nav-item">
-            <a href="#mail" class="nav-link active ms-2 me-2 fw-bold">Mail</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link active fw-bold" id="update" href="#" aria-expanded="false">
-            Update
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="profile_update.php"  name="profile">Profile</a></li>
-            <li><a class="dropdown-item" href="password_update.php"  name="password">Password</a></li>
-          </ul>
-          <a href="admin.php" id="admin" class="nav-link active fw-bold">Admin</a>
-        </li>
+    <div id="bar" onclick="showNav()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <div>
+        <ul id="navBar" class="navbar-nav ml-auto nav-ul">
+            <li class="nav-item">
+                <a href="#mail" class="nav-link active ms-2 me-2 fw-bold">Mail</a>
+            </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link active fw-bold" id="update" href="#" aria-expanded="false">
+                Update
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="profile_update.php"  name="profile">Profile</a></li>
+                <li><a class="dropdown-item" href="password_update.php"  name="password">Password</a></li>
+            </ul>
+            <a href="admin.php" id="admin" class="nav-link active fw-bold">Admin</a>
+            </li>
 
-        <li class="nav-item">
-            <a href="#" class="nav-link active me-2 fw-bold" role="button" onclick="confirmLogout()">Logout</a>
-        </li>
-    </ul>
+            <li class="nav-item">
+                <a href="#" class="nav-link active me-2 fw-bold" role="button" onclick="confirmLogout()">Logout</a>
+            </li>
+        </ul>
+    </div>
     </div>
     </nav>
 </section>
@@ -214,16 +242,16 @@
 <section id="banner">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 data-col">
                 <div class="name">
-                    <h1 class="info">Hi <?php echo $row['name']?></h1>
+                    <h1 class="info">Hi <?php echo $name?></h1>
                     <p class="info"><span class="welcome">Welcome!</span> Our mission is to provide accessible and engaging learning resources for students with a focus on promoting critical thinking, creativity, and lifelong learning.</p>
                 </div>
                 <div class="button">
                     <a href="#subscribe"><button class="btn">Subscribe</button></a>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 data-img-col">
                 <img id="profile-img" class="img-fluid rounded-4" src="assets/images/profile2.jpg" alt="profile">
             </div>            
         </div>
@@ -237,13 +265,13 @@
 <section id="features">
         <div class="container feature-row">
             <div class="row">
-                <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
+                <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 feature-row-col1">
                     <div class="feature-title" data-wow-delay="0.3s" data-wow-duration="1s">
                         <h2>apps features</h2>
                         <p>Our app offers a range of innovative features to enhance your experience and simplify your life.</p>
                     </div>
                 </div>
-                <div class="col-lg-12 mt-3 mb-3">
+                <div class="col-lg-12 mt-3 mb-3 feature-row-col2">
                     <div class="row justify-content-center grid gap-3">
                         <div class="card shadow">
                             <img src="assets/images/portfolio.png" class="card-img-top" alt="img">
@@ -451,6 +479,13 @@
             if(confirmLogout){
                 window.location = "logout.php";
             }
+        }
+
+        const icon = document.getElementById('bar');
+        const navBar = document.getElementById('navBar');
+        const showNav = () => {
+            icon.classList.toggle('bx-x');
+            navBar.classList.toggle('open');
         }
 
     </script>

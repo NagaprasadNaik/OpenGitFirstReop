@@ -6,8 +6,6 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception; 
-    
-    $con = mysqli_connect($servername, $username, $password, $database);
 
     $newPassword = $confirmPassword = $passError = $error = $email = '';
     $status = 0;
@@ -126,11 +124,27 @@
                 // $status = 2;
             }else{
 
-                $sql3 = "SELECT * FROM `user` WHERE email = '$email' ";
-                $result3 = mysqli_query($con, $sql3);
+                try{
+                    $sql3 = "SELECT * FROM `user` WHERE email = '$email' ";
+                    $result3 = mysqli_query($con, $sql3);
+                }catch(Exception $e){
+                   echo "";
+                }
+
                 if(mysqli_num_rows($result3) != 0){
-                    $sql4 = "UPDATE `user` SET password = '$newPassword' WHERE email = '$email' ";
-                    $result4 = mysqli_query($con, $sql4);
+
+                    try{
+                        $sql4 = "UPDATE `user` SET password = '$newPassword' WHERE email = '$email' ";
+                        $result4 = mysqli_query($con, $sql4);
+                    }catch(Exception $e){
+                        ?>
+                        <script>
+                           alert('Server error. Please try after some time');
+                           window.location = 'forgot_pwd.php';
+                        </script>
+                     <?php
+                    }
+
                     ?>
                         <script>
                             alert('Your password has been changed successfully!');
@@ -138,7 +152,6 @@
                         </script>
                     <?php
                 }else{
-                    // header('Loaction: forgot_pwd.php');
                     ?>
                     <script>
                         alert('Your email address is not registred! Please register.');
